@@ -1,10 +1,10 @@
 #[DEMO](http://lapanoid.github.io/redux-remote)
 
-Most importantly that I am not resending all actions but listen store updates and send it to another redux instance which updates itself. 
+Most importantly that I am not resend all actions but listen store updates and send it to another redux instance which updates itself. 
 
-Some diff algorithm can implemented on top of it.
+Some diff algorithm can be implemented on top of it.
 
-It can be used in webworkers or on servers to relief client from costly computations.
+It can be used in webworkers or on servers to relieve client from costly computations.
 
 Syncing can be used for realtime collaboration apps.
 
