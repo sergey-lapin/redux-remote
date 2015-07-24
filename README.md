@@ -6,6 +6,8 @@ Some diff algorithm can implemented on top of it.
 
 It can be used in webworkers or on servers to relief client from costly computations.
 
+Syncing can be used for realtime collaboration apps.
+
 # TODO
 - publish npm 
 - add description 
