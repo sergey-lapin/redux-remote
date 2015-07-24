@@ -12,3 +12,4 @@ Syncing can be used for realtime collaboration apps.
 - extract code from example to src
 - publish npm 
 - add doc
+- add demo build script
