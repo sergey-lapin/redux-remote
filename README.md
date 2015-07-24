@@ -9,8 +9,8 @@ It can be used in webworkers or on servers to relieve client from costly computa
 Syncing can be used for realtime collaboration apps.
 
 # TODO
-- move to Redux 1.0 RC
-- extract code from example to src
-- publish npm 
-- add doc
-- add demo build script
+- [x] move to Redux 1.0 RC
+- [ ] extract code from example to src
+- [ ] publish npm 
+- [ ] add doc
+- [ ] add demo build script
