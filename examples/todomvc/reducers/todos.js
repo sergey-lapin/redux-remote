@@ -1,4 +1,5 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, MARK_TODO, MARK_ALL, CLEAR_MARKED,SET_STATE } from '../constants/ActionTypes';
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, MARK_TODO, MARK_ALL, CLEAR_MARKED } from '../constants/ActionTypes';
+import { SET_STATE } from '../constants/WireActions';
 
 const initialState = [{
     text: 'Use Redux',
@@ -7,6 +8,7 @@ const initialState = [{
 }];
 
 export default function todos(state = initialState, action) {
+    console.log(action)
     switch (action.type) {
         case ADD_TODO:
             return [{

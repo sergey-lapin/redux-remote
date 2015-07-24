@@ -4,18 +4,22 @@ import { createRedux, createDispatcher, composeStores} from 'redux';
 import thunkMiddleware from 'redux/lib/middleware/thunk';
 import { Provider } from 'redux/react';
 import * as reducers from '../reducers';
-import SET_STATE from '../actions/WireActions';
+import {SET_STATE} from '../constants/WireActions';
 import {dataListener} from './dataListenener';
 
 export default function createApp() {
     let passStoreUpdate = false;
 
     const onAction = (action)=> {
-        passStoreUpdate = action.type !== 'SET_STATE';
+        console.log(action.type)
+        console.log(SET_STATE)
+        passStoreUpdate = action.type !== SET_STATE;
     };
 
     const subscribeOnState = (dataListener)=> {
         redux.subscribe(() => {
+            console.log(redux.getState());
+            console.log(passStoreUpdate);
             if (!passStoreUpdate)
                 return;
 
