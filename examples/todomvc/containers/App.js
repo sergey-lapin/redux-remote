@@ -4,8 +4,8 @@ import { createRedux, createDispatcher, composeStores} from 'redux';
 import thunkMiddleware from 'redux/lib/middleware/thunk';
 import { Provider } from 'redux/react';
 import * as reducers from '../reducers';
-import SET_STATE from '../actions/';
-import {dataListener} from './dataListenener.js';
+import SET_STATE from '../actions/WireActions';
+import {dataListener} from './dataListenener';
 
 export default function createApp() {
     let passStoreUpdate = false;
