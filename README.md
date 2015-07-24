@@ -9,5 +9,6 @@ It can be used in webworkers or on servers to relief client from costly computat
 Syncing can be used for realtime collaboration apps.
 
 # TODO
+- extract code from example to src
 - publish npm 
-- add description 
+- add doc
