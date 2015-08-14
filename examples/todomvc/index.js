@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import {createSubscribeOnStateStore} from '../../src';
-import {dataListener} from './dataListenener';
 import 'todomvc-app-css/index.css';
 import TodoApp from './containers/TodoApp';
 import * as reducers from './reducers';
@@ -28,13 +27,12 @@ const store2 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
 const store3 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
 const store4 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
 
-const dispatchState = (store)=>(state)=>store.dispatch(setState(state))
+const dispatchState = (store)=>(state)=>store.dispatch(setState(state));
 
-store1.subscribeOnState(dataListener(dispatchState(store2)));
-//app2.subscribeOnState(dataListener(app1.dispatch.bind(app1)));
-
-store3.subscribeOnState(dataListener(dispatchState(store4)));
-store4.subscribeOnState(dataListener(dispatchState(store3)));
+store1.subscribeOnState((data)=>dispatchState(store2)(data));
+//app2.subscribeOnState((data)=>dispatchState(store2)(data)));
+store3.subscribeOnState((data)=>dispatchState(store4)(data));
+store4.subscribeOnState((data)=>dispatchState(store3)(data));
 
 const createApp = R.curry((UserApp, store) => pure(()=>(
     <Provider store={store}>
