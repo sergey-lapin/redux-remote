@@ -8,7 +8,6 @@ const initialState = [{
 }];
 
 export default function todos(state = initialState, action) {
-    console.log(action)
     switch (action.type) {
         case ADD_TODO:
             return [{
@@ -45,9 +44,6 @@ export default function todos(state = initialState, action) {
 
         case CLEAR_MARKED:
             return state.filter(todo => todo.marked === false);
-
-        case SET_STATE:
-            return action.state.todos;
 
         default:
             return state;

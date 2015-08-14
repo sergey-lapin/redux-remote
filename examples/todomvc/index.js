@@ -1,23 +1,40 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import createSubscribeOnStateStore from './containers/createSubscribeOnStateStore';
-import {dataListener} from './containers/dataListenener';
+import {createSubscribeOnStateStore} from '../../src';
+import {dataListener} from './dataListenener';
 import 'todomvc-app-css/index.css';
 import TodoApp from './containers/TodoApp';
 import * as reducers from './reducers';
 import R from 'ramda';
 import pure from 'react-pure-component';
+import * as redux from 'redux';
 
-const store1 = createSubscribeOnStateStore(dataListener, reducers);
-const store2 = createSubscribeOnStateStore(dataListener, reducers);
-const store3 = createSubscribeOnStateStore(dataListener, reducers);
-const store4 = createSubscribeOnStateStore(dataListener, reducers);
+const SET_STATE = "@@@@SET_STATE";
+const setState = (state) =>({type: SET_STATE, state});
 
-store1.subscribeOnState(dataListener(store2.dispatch.bind(store2)));
+const oldTodos = reducers.todos;
+
+reducers.todos = (state, action)=>{
+    switch (action.type) {
+        case SET_STATE:
+            return action.state.todos;
+        default:
+            return oldTodos(state, action)
+    }
+};
+
+const store1 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
+const store2 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
+const store3 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
+const store4 = createSubscribeOnStateStore(redux, SET_STATE, reducers);
+
+const dispatchState = (store)=>(state)=>store.dispatch(setState(state))
+
+store1.subscribeOnState(dataListener(dispatchState(store2)));
 //app2.subscribeOnState(dataListener(app1.dispatch.bind(app1)));
 
-store3.subscribeOnState(dataListener(store4.dispatch.bind(store2)));
-store4.subscribeOnState(dataListener(store3.dispatch.bind(store1)));
+store3.subscribeOnState(dataListener(dispatchState(store4)));
+store4.subscribeOnState(dataListener(dispatchState(store3)));
 
 const createApp = R.curry((UserApp, store) => pure(()=>(
     <Provider store={store}>
@@ -38,8 +55,8 @@ React.render(
 );
 
 React.render(
-  <App2 />,
-  document.getElementById('root2')
+    <App2 />,
+    document.getElementById('root2')
 );
 
 React.render(

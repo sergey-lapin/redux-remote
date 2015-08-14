@@ -1,17 +1,9 @@
-import * as redux from 'redux';
-import React, { Component } from 'react';
-import {SET_STATE} from '../constants/WireActions';
-import pure from 'react-pure-component';
-
-const { createDispatcher, combineReducers, applyMiddleware}  = redux;
-
-export default (dataListener, reducers)=> {
+export default (redux, SET_STATE_ACTION, reducers)=> {
     let passStoreUpdate = false;
 
     const onAction = (action)=> {
         console.log(action.type);
-        console.log(SET_STATE);
-        passStoreUpdate = action.type !== SET_STATE;
+        passStoreUpdate = action.type !== SET_STATE_ACTION;
     };
 
     const actionCatchMiddleware = ({dispatch}) => next => action => {
@@ -20,8 +12,8 @@ export default (dataListener, reducers)=> {
         next(action);
     };
 
-    const createStoreWithMiddleware = applyMiddleware(actionCatchMiddleware)(redux.createStore);
-    const store = createStoreWithMiddleware(combineReducers(reducers));
+    const createStoreWithMiddleware = redux.applyMiddleware(actionCatchMiddleware)(redux.createStore);
+    const store = createStoreWithMiddleware(redux.combineReducers(reducers));
 
     const subscribeOnState = (dataListener)=> {
         store.subscribe(() => {

@@ -1,6 +1,5 @@
 import {diff, patch} from 'jsondiffpatch';
 import R from 'ramda';
-import {setState} from '../actions/WireActions';
 
 const differ = (initialState = {})=> {
     let oldState = initialState;
@@ -23,7 +22,7 @@ const collecter = (initialState = {})=> {
 const collecterInstFunc = collecter();
 const differInstFunc = differ();
 
-export const dataListener = R.curry((dispatch, data)=> {
+export const dataListener = R.curry(( dispatchState, data)=> {
     const clone = (d)=>JSON.parse(JSON.stringify(d));
     //const obj = {...b}
 
@@ -36,7 +35,7 @@ export const dataListener = R.curry((dispatch, data)=> {
     //console.log(JSON.stringify(b))
     //console.log(JSON.stringify(clone(b)))
 
-    setTimeout(()=>dispatch(setState(
+    setTimeout(()=>dispatchState(
         //R.compose(clone, collecterInstFunc, differInstFunc)
-        (data))), 0)
+        (data)), 0)
 });
