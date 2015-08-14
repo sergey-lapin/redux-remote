@@ -1,12 +1,14 @@
-import { createStore, createDispatcher, combineReducers, applyMiddleware} from 'redux';
+import * as redux from 'redux';
 import React, { Component } from 'react';
-import TodoApp from './TodoApp';
-import { Provider } from 'react-redux';
+
 import * as reducers from '../reducers';
 import {SET_STATE} from '../constants/WireActions';
 import {dataListener} from './dataListenener';
+import pure from 'react-pure-component';
 
-export default function createApp() {
+const { createDispatcher, combineReducers, applyMiddleware}  = redux;
+
+export default function createStore() {
     let passStoreUpdate = false;
 
     const onAction = (action)=> {
@@ -21,9 +23,8 @@ export default function createApp() {
         next(action);
     };
 
-    const reducer = combineReducers(reducers);
-    const createStoreWithMiddleware = applyMiddleware(actionCatchMiddleware)(createStore);
-    const store = createStoreWithMiddleware(reducer);
+    const createStoreWithMiddleware = applyMiddleware(actionCatchMiddleware)(redux.createStore);
+    const store = createStoreWithMiddleware(combineReducers(reducers));
 
     const subscribeOnState = (dataListener)=> {
         store.subscribe(() => {
@@ -34,21 +35,10 @@ export default function createApp() {
         });
     };
 
-    class App extends Component {
-        render() {
-            return (
-                <div>
-                    <Provider store={store}>
-                        {() => <TodoApp /> }
-                    </Provider>
-                </div>
-            );
-        }
-    }
-
     return {
-        App,
         dispatch: store.dispatch.bind(store),
+        getState: store.getState.bind(store),
+        subscribe: store.subscribe.bind(store),
         subscribeOnState
     }
 }

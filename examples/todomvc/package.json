@@ -43,6 +43,7 @@
     "jsondiffpatch": "^0.1.33",
     "ramda": "^0.17.1",
     "react": "^0.13.3",
+    "react-pure-component": "^0.1.0",
     "react-redux": "^0.2.1",
     "redux": "^1.0.0-rc",
     "redux-thunk": "^0.1.0",

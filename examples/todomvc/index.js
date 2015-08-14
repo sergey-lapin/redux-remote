@@ -1,22 +1,35 @@
 import React from 'react';
-import createApp from './containers/App';
+import { Provider } from 'react-redux';
+import createStore from './containers/App';
 import {dataListener} from './containers/dataListenener';
 import 'todomvc-app-css/index.css';
+import TodoApp from './containers/TodoApp';
+import R from 'ramda';
+import pure from 'react-pure-component';
 
-const app1 = createApp();
-const {App:App1} = app1;
-const app2= createApp();
-const {App:App2} = app2;
-const app3 = createApp();
-const {App:App3} = app3;
-const app4= createApp();
-const {App:App4} = app4;
+const store1 = createStore();
+const store2 = createStore();
+const store3 = createStore();
+const store4 = createStore();
 
-app1.subscribeOnState(dataListener(app2.dispatch.bind(app2)));
+store1.subscribeOnState(dataListener(store2.dispatch.bind(store2)));
 //app2.subscribeOnState(dataListener(app1.dispatch.bind(app1)));
 
-app3.subscribeOnState(dataListener(app4.dispatch.bind(app2)));
-app4.subscribeOnState(dataListener(app3.dispatch.bind(app1)));
+store3.subscribeOnState(dataListener(store4.dispatch.bind(store2)));
+store4.subscribeOnState(dataListener(store3.dispatch.bind(store1)));
+
+const createApp = R.curry((UserApp, store) => pure(()=>(
+    <Provider store={store}>
+        {() => <UserApp /> }
+    </Provider>
+)));
+
+const createTodoApp = createApp(TodoApp);
+
+const App1 = createTodoApp(store1);
+const App2 = createTodoApp(store2);
+const App3 = createTodoApp(store3);
+const App4 = createTodoApp(store4);
 
 React.render(
     <App1 />,
