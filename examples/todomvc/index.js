@@ -1,16 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import createStore from './containers/App';
+import createSubscribeOnStateStore from './containers/createSubscribeOnStateStore';
 import {dataListener} from './containers/dataListenener';
 import 'todomvc-app-css/index.css';
 import TodoApp from './containers/TodoApp';
+import * as reducers from './reducers';
 import R from 'ramda';
 import pure from 'react-pure-component';
 
-const store1 = createStore();
-const store2 = createStore();
-const store3 = createStore();
-const store4 = createStore();
+const store1 = createSubscribeOnStateStore(dataListener, reducers);
+const store2 = createSubscribeOnStateStore(dataListener, reducers);
+const store3 = createSubscribeOnStateStore(dataListener, reducers);
+const store4 = createSubscribeOnStateStore(dataListener, reducers);
 
 store1.subscribeOnState(dataListener(store2.dispatch.bind(store2)));
 //app2.subscribeOnState(dataListener(app1.dispatch.bind(app1)));

@@ -1,14 +1,11 @@
 import * as redux from 'redux';
 import React, { Component } from 'react';
-
-import * as reducers from '../reducers';
 import {SET_STATE} from '../constants/WireActions';
-import {dataListener} from './dataListenener';
 import pure from 'react-pure-component';
 
 const { createDispatcher, combineReducers, applyMiddleware}  = redux;
 
-export default function createStore() {
+export default (dataListener, reducers)=> {
     let passStoreUpdate = false;
 
     const onAction = (action)=> {
